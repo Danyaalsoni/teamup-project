@@ -19,6 +19,6 @@
             android:layout_marginTop="35dp"
             android:src="@mipmap/user_add_512"
             app:civ_border_color="@color/colorPrimary"
-            app:civ_border_width="1dp" />
+            app:civ_border_width="2dp" />
     </LinearLayout>
 </RelativeLayout>
