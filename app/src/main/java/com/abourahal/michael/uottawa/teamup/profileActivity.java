@@ -29,14 +29,7 @@ public class profileActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
-        ImageView contactImage=(ImageView)findViewById(R.id.contactImage);
-        contactImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),profileActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
     }
     @Override

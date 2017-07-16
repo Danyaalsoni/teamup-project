@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,7 +44,31 @@ public class NavigationActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        View header=navigationView.getHeaderView(0);
+        ImageView contactImage=(ImageView)header.findViewById(R.id.contactImage);
+        contactImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),profileActivity.class);
+                startActivity(intent);
+            }
+        });
+        TextView contactName=(TextView) header.findViewById(R.id.contactName);
+        contactName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),profileActivity.class);
+                startActivity(intent);
+            }
+        });
+        TextView contactEmail=(TextView) header.findViewById(R.id.contactEmail);
+        contactEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),profileActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
