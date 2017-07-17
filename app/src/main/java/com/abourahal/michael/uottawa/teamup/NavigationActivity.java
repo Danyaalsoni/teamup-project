@@ -37,6 +37,10 @@ public class NavigationActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(0).setChecked(true);
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame,new FirstFragment()).commit();
+
         View header=navigationView.getHeaderView(0);
         ImageView contactImage=(ImageView)header.findViewById(R.id.contactImage);
         contactImage.setOnClickListener(new View.OnClickListener() {

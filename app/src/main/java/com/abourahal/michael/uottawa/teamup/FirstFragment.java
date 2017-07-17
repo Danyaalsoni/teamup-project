@@ -1,6 +1,7 @@
 package com.abourahal.michael.uottawa.teamup;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -73,6 +74,7 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
             public void onClick(View view) {
                 Snackbar.make(view, "Adding Event", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
 
             }
         });
