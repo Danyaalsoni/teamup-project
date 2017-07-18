@@ -22,5 +22,9 @@ public class profileActivity extends AppCompatActivity {
 
 
     }
+    public void launchEditProfileActivity(View view){
+        Intent intent = new Intent(getApplicationContext(),editProfileActivity.class);
+        startActivity(intent);
+    }
 
 }

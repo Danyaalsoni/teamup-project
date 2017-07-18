@@ -15,6 +15,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:clickable="true"
+        android:onClick="launchEditProfileActivity"
         app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal"
         app:srcCompat="@mipmap/ic_edit_white_24dp" />
