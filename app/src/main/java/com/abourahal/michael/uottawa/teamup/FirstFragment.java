@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,13 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 
 /**
@@ -71,6 +80,7 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
         lr.setFastestInterval(15*1000);
         lr.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
+
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         //fab.set
         fab.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +103,46 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
     }
+    private void writeToFile(String data,Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
 
+    private String readFromFile(Context context) {
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = context.openFileInput("config.txt");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
+    }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -127,16 +176,14 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
-            //mMap.setMyLocationEnabled(true);
-            //requestLocationUpdate();
-            //Location l = mMap.getMyLocation();
-            //mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("test").snippet("test"));
+
 
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener(){
                 @Override
                 public void onMapClick(LatLng latLng) {
                     mMap.clear();
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("Event Location"));
+                    loadFile();
+                    mMap.addMarker(new MarkerOptions().position(latLng).title("Event here?"));
                     selectedLatitude = latLng.latitude;
                     selectedLongitude = latLng.longitude;
                 }
@@ -145,11 +192,24 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
 
         Toast.makeText(getActivity(), "permission denied", Toast.LENGTH_LONG).show();
     }
-
-
+    loadFile();
 
     }
 
+    private void loadFile()
+    {
+        String allActivity = readFromFile(getActivity());
+        String[] allMarker = allActivity.split("\n");
+        for(int i=0;i<allMarker.length;++i)
+        {
+            String[] allFileItems = (allMarker[i]).split("\\|");
+            if(!allFileItems[0].equals("")) {
+                double lat = Double.parseDouble(allFileItems[0]);
+                double lon = Double.parseDouble(allFileItems[1]);
+                mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(allFileItems[3]));
+            }
+        }
+    }
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         requestLocationUpdate();

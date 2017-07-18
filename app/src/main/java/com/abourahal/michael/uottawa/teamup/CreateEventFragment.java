@@ -2,13 +2,20 @@ package com.abourahal.michael.uottawa.teamup;
 
 import android.*;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,6 +26,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 /**
  * Created by hocke on 2017-07-17.
@@ -40,6 +54,38 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback 
             latitude = bundle.getDouble("latitude", 0);
             longitude = bundle.getDouble("longitude", 0);
         }
+        Spinner spSport = (Spinner) getActivity().findViewById(R.id.spSport);
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        //fab.set
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                EditText etTitle = (EditText) getActivity().findViewById(R.id.etTitle);
+                EditText etMaxNumber = (EditText) getActivity().findViewById(R.id.etMaxNumber);
+                EditText etDate = (EditText) getActivity().findViewById(R.id.etDate);
+                EditText etStartTime = (EditText) getActivity().findViewById(R.id.etStartTime);
+                EditText etEndTime = (EditText) getActivity().findViewById(R.id.etEndTime);
+                EditText etDescription = (EditText) getActivity().findViewById(R.id.etDescription);
+                Spinner spSport = (Spinner) getActivity().findViewById(R.id.spSport);
+                CheckBox chkRepeat = (CheckBox) getActivity().findViewById(R.id.chkRepeat);
+                boolean check = chkRepeat.isChecked();
+                String checkString ="";
+                if(check)
+                checkString="yes";
+                else
+                checkString="no";
+                writeToFile("",getActivity());
+                String data =  latitude+"|"+longitude+"|"+etTitle.getText().toString()+"|"+etMaxNumber.getText().toString()+"|"+etDate.getText().toString()+"|"+etStartTime.getText().toString()+"|"+etEndTime.getText().toString()+"|"+etDescription.getText().toString()+"|"+spSport.getSelectedItem().toString()+"|"+checkString+"\n";
+                String previousData = readFromFile(getActivity());
+                writeToFile(previousData+data,getActivity());
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame,new FirstFragment()).commit();
+                Toast.makeText(getActivity(), "Event added at coordinates "+latitude+" latitude, "+longitude+" longitude", Toast.LENGTH_LONG).show();
+            }
+        });
+
         return myView;
     }
     @Override
@@ -52,7 +98,46 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback 
             mMapView.getMapAsync(this);
         }
     }
+    private void writeToFile(String data,Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
 
+    private String readFromFile(Context context) {
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = context.openFileInput("config.txt");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+
+        return ret;
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.

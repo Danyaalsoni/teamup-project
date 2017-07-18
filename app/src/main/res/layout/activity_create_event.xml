@@ -29,7 +29,7 @@
                 android:text="Title:" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/etTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -49,7 +49,7 @@
                 app:srcCompat="@mipmap/ic_description_black_24dp" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/etMaxNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -74,10 +74,11 @@
                 app:srcCompat="@mipmap/ic_description_black_24dp" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/spSport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:entries="@array/sports"/>
 
         </LinearLayout>
 
@@ -97,7 +98,7 @@
                 app:srcCompat="@mipmap/ic_description_black_24dp" />
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/etDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.36"
@@ -105,7 +106,7 @@
                 android:inputType="date" />
 
             <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/etStartTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -126,7 +127,7 @@
                 android:text="    " />
 
             <EditText
-                android:id="@+id/editText8"
+                android:id="@+id/etEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="180dp"
@@ -146,7 +147,7 @@
                 app:srcCompat="@mipmap/ic_description_black_24dp" />
 
             <CheckBox
-                android:id="@+id/checkBox"
+                android:id="@+id/chkRepeat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
@@ -166,7 +167,7 @@
                 app:srcCompat="@mipmap/ic_description_black_24dp" />
 
             <EditText
-                android:id="@+id/editText10"
+                android:id="@+id/etDescription"
                 android:layout_width="230dp"
                 android:layout_height="97dp"
                 android:layout_gravity="top"
