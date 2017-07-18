@@ -9,7 +9,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="107dp"
-        android:text="Third Layout templatee"
+        android:text="Third Layout template"
         android:textColor="@android:color/black"
         android:textSize="24sp" />
 </RelativeLayout>
