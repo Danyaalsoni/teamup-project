@@ -3,12 +3,14 @@ package com.abourahal.michael.uottawa.teamup;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
@@ -47,6 +49,8 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
     private LocationRequest lr;
     private double latitude;
     private double longitude;
+    private double selectedLatitude;
+    private double selectedLongitude;
     private float zoom =14;
     private float bearing = 0;
     private int count = 0;
@@ -72,9 +76,16 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Adding Event", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
+                //Snackbar.make(view, "Adding Event", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
+                //NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+                CreateEventFragment cr = new CreateEventFragment();
+                Bundle b = new Bundle();
+                b.putDouble("latitude",selectedLatitude);
+                b.putDouble("longitude",selectedLongitude);
+                cr.setArguments(b);
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_frame,cr).commit();
 
             }
         });
@@ -125,7 +136,9 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
                 @Override
                 public void onMapClick(LatLng latLng) {
                     mMap.clear();
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("test").snippet("test"));
+                    mMap.addMarker(new MarkerOptions().position(latLng).title("Event Location"));
+                    selectedLatitude = latLng.latitude;
+                    selectedLongitude = latLng.longitude;
                 }
             });
         } else {
@@ -169,13 +182,11 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
         {
             zoom= 14;
             bearing = 0;
+            CameraPosition lib = CameraPosition.builder().target(new LatLng(latitude, longitude)).zoom(zoom).bearing(bearing).build();
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(lib));
+
         }
-        else {
-            zoom = mMap.getCameraPosition().zoom;
-            bearing = mMap.getCameraPosition().bearing;
-        }
-        CameraPosition lib = CameraPosition.builder().target(new LatLng(latitude, longitude)).zoom(zoom).bearing(bearing).build();
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(lib));
+
 
         count++;
     }
