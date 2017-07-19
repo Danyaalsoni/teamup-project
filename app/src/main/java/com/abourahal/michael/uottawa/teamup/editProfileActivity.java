@@ -1,8 +1,10 @@
 package com.abourahal.michael.uottawa.teamup;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -31,7 +33,10 @@ public class editProfileActivity extends AppCompatActivity {
     private CheckBox competitiveCheck;
     private String name,phoneNumber,email,description,dateText;
     private int year,month,day;
+    public static final String PROFILEPREFERENCES="profilePreference";
+    public static final String NAMEKEY="nameKey",PHONEKEY="phoneKey",EMAILKEY="emailKey",DESCRIPTIONKEY="descriptionKey",DATEKEY="dateKey",MALEKEY="maleKey",FEMALEKEY="femaleKey",COMPETITIVEKEY="competitiveKey";
     FloatingActionButton fab;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +114,7 @@ public class editProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 validate();
+                finish();
             }
         });
         dialog.setNegativeButton("Discard", new DialogInterface.OnClickListener(){
@@ -122,7 +128,8 @@ public class editProfileActivity extends AppCompatActivity {
         dialog.create().show();
     }
     public void validate(){
-
+        sharedPreferences=getSharedPreferences(PROFILEPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =sharedPreferences.edit();
         if(nameEdit.getText().toString().equals("")){
             AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
             dialog.setMessage("Please enter your Name");
@@ -137,6 +144,7 @@ public class editProfileActivity extends AppCompatActivity {
             dialog.create().show();
         }else {
             name = nameEdit.getText().toString();
+            editor.putString(NAMEKEY,name);
         }
         if(phoneNumberEdit.getText().toString().equals("")){
             AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
@@ -152,6 +160,7 @@ public class editProfileActivity extends AppCompatActivity {
             dialog.create().show();
         }else {
             phoneNumber = phoneNumberEdit.getText().toString();
+            editor.putString(PHONEKEY,phoneNumber);
         }
         if(emailEdit.getText().toString().equals("")){
             AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
@@ -167,8 +176,10 @@ public class editProfileActivity extends AppCompatActivity {
             dialog.create().show();
         }else {
             email = emailEdit.getText().toString();
+            editor.putString(EMAILKEY,email);
         }
         description=descriptionEdit.getText().toString();
+        editor.putString(DESCRIPTIONKEY,description);
         if(date.getText().toString().equals("")) {
             AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
             dialog.setMessage("Please enter your Date of Birth");
@@ -183,13 +194,19 @@ public class editProfileActivity extends AppCompatActivity {
             dialog.create().show();
         }else {
             dateText = date.getText().toString();
+            editor.putString(DATEKEY,dateText);
         }
         maleR=maleRadio.isChecked();
+        editor.putBoolean(MALEKEY,maleR);
         femaleR=femaleRadio.isChecked();
+        editor.putBoolean(FEMALEKEY,femaleR);
         competitive=competitiveCheck.isChecked();//v
+        editor.putBoolean(COMPETITIVEKEY,competitive);
 
     }
     public void validate1(){
+        sharedPreferences=getSharedPreferences(PROFILEPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =sharedPreferences.edit();
         boolean flag=true;
         if(nameEdit.getText().toString().equals("")){
             flag=false;
@@ -206,6 +223,7 @@ public class editProfileActivity extends AppCompatActivity {
             dialog.create().show();
         }else {
             name = nameEdit.getText().toString();
+            editor.putString(NAMEKEY,name);
         }
         if(phoneNumberEdit.getText().toString().equals("")){
             flag=false;
@@ -222,6 +240,7 @@ public class editProfileActivity extends AppCompatActivity {
             dialog.create().show();
         }else {
             phoneNumber = phoneNumberEdit.getText().toString();
+            editor.putString(PHONEKEY,phoneNumber);
         }
         if(emailEdit.getText().toString().equals("")){
             flag=false;
@@ -238,8 +257,10 @@ public class editProfileActivity extends AppCompatActivity {
             dialog.create().show();
         }else {
             email = emailEdit.getText().toString();
+            editor.putString(EMAILKEY,email);
         }
         description=descriptionEdit.getText().toString();
+        editor.putString(DESCRIPTIONKEY,description);
         if(date.getText().toString().equals("")) {
             flag=false;
             AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
@@ -255,10 +276,14 @@ public class editProfileActivity extends AppCompatActivity {
             dialog.create().show();
         }else {
             dateText = date.getText().toString();
+            editor.putString(DATEKEY,dateText);
         }
         maleR=maleRadio.isChecked();
+        editor.putBoolean(MALEKEY,maleR);
         femaleR=femaleRadio.isChecked();
+        editor.putBoolean(FEMALEKEY,femaleR);
         competitive=competitiveCheck.isChecked();//v
+        editor.putBoolean(COMPETITIVEKEY,competitive);
 
         if(flag) {
             Intent intent = new Intent(getApplicationContext(), profileActivity.class);
