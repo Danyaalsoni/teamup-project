@@ -182,7 +182,7 @@
                         app:srcCompat="@mipmap/medal" />
 
                     <TextView
-                        android:id="@+id/copmpetitiveTextView"
+                        android:id="@+id/competitiveTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="6.60"

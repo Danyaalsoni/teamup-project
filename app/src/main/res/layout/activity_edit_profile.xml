@@ -9,7 +9,7 @@
     >
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -79,14 +79,14 @@
                     android:paddingTop="11dp">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/imageViewPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="31dp"
                         android:layout_weight="1"
                         app:srcCompat="@mipmap/ic_phone_black_24dp" />
 
                     <EditText
-                        android:id="@+id/NumberEditText"
+                        android:id="@+id/numberEditText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="10"
@@ -106,7 +106,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/imageViewEmail"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginLeft="7dp"
@@ -114,7 +114,7 @@
                         app:srcCompat="@mipmap/ic_email_black_24dp" />
 
                     <EditText
-                        android:id="@+id/editText7"
+                        android:id="@+id/emailEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="10"
@@ -145,6 +145,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:checked="true"
                             android:text="Male" />
 
                         <RadioButton
@@ -221,6 +222,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="7dp"
                         android:layout_weight="10"
+                        android:checked="false"
                         android:text="Competitive"
                         android:textSize="18sp" />
 
@@ -231,23 +233,52 @@
                     android:layout_height="10dp" />
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageViewHandball"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@mipmap/handball" />
+
+                    <EditText
+                        android:id="@+id/sportsEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="10"
+                        android:ems="10"
+                        android:hint="Enter your Favourite Sport"
+                        android:inputType="textPersonName" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
                     android:layout_width="304dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/imageViewDescription"
                         android:layout_width="50dp"
                         android:layout_height="34dp"
                         app:srcCompat="@mipmap/ic_description_black_24dp" />
 
                     <EditText
-                        android:id="@+id/editText11"
+                        android:id="@+id/descriptionEditText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.12"
                         android:ems="10"
+                        android:hint="Description"
                         android:inputType="textMultiLine" />
 
                 </LinearLayout>
