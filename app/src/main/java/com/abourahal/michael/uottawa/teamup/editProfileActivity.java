@@ -20,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -29,14 +30,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class editProfileActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST=1;
     private Button date;
-    private EditText nameEdit,phoneNumberEdit,emailEdit,descriptionEdit;
+    private EditText nameEdit,phoneNumberEdit,emailEdit,descriptionEdit,sportEdit;
     private RadioButton maleRadio,femaleRadio;
     private boolean maleR,femaleR,competitive;
     private CheckBox competitiveCheck;
     private String name,phoneNumber,email,description,dateText;
     private int year,month,day;
     public static final String PROFILEPREFERENCES="profilePreference";
-    public static final String NAMEKEY="nameKey",PHONEKEY="phoneKey",EMAILKEY="emailKey",DESCRIPTIONKEY="descriptionKey",DATEKEY="dateKey",MALEKEY="maleKey",FEMALEKEY="femaleKey",COMPETITIVEKEY="competitiveKey";
+    public static final String SPORTSKEY="sportKey",NAMEKEY="nameKey",PHONEKEY="phoneKey",EMAILKEY="emailKey",DESCRIPTIONKEY="descriptionKey",DATEKEY="dateKey",MALEKEY="maleKey",FEMALEKEY="femaleKey",COMPETITIVEKEY="competitiveKey";
     FloatingActionButton fab;
     SharedPreferences sharedPreferences;
     @Override
@@ -61,6 +62,7 @@ public class editProfileActivity extends AppCompatActivity {
         maleRadio=(RadioButton)findViewById(R.id.maleRadio);
         femaleRadio=(RadioButton)findViewById(R.id.femaleRadio);
         competitiveCheck=(CheckBox)findViewById(R.id.checkBox);
+        sportEdit=(EditText)findViewById(R.id.sportsEditText);
         fab=(FloatingActionButton)findViewById(R.id.saveButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,12 +218,15 @@ public class editProfileActivity extends AppCompatActivity {
             dateText = date.getText().toString();
             editor.putString(DATEKEY,dateText);
         }
+        editor.putString(SPORTSKEY,sportEdit.getText().toString());
         maleR=maleRadio.isChecked();
         editor.putBoolean(MALEKEY,maleR);
         femaleR=femaleRadio.isChecked();
         editor.putBoolean(FEMALEKEY,femaleR);
         competitive=competitiveCheck.isChecked();//v
         editor.putBoolean(COMPETITIVEKEY,competitive);
+        editor.commit();
+        Toast.makeText(getApplicationContext(),"Successful save",Toast.LENGTH_LONG);
 
     }
     public void validate1(){
@@ -298,17 +303,19 @@ public class editProfileActivity extends AppCompatActivity {
             dateText = date.getText().toString();
             editor.putString(DATEKEY,dateText);
         }
+        editor.putString(SPORTSKEY,sportEdit.getText().toString());
         maleR=maleRadio.isChecked();
         editor.putBoolean(MALEKEY,maleR);
         femaleR=femaleRadio.isChecked();
         editor.putBoolean(FEMALEKEY,femaleR);
         competitive=competitiveCheck.isChecked();//v
         editor.putBoolean(COMPETITIVEKEY,competitive);
-
+        editor.commit();
         if(flag) {
-            Intent intent = new Intent(getApplicationContext(), profileActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getApplicationContext(), profileActivity.class);
+//            startActivity(intent);
+            finish();
         }
-
+        Toast.makeText(getApplicationContext(),"Successful save",Toast.LENGTH_LONG).show();
     }
 }
