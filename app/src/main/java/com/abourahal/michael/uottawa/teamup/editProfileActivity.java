@@ -120,6 +120,6 @@ public class editProfileActivity extends AppCompatActivity {
         dateText=date.getText().toString();
         maleR=maleRadio.isChecked();
         femaleR=femaleRadio.isChecked();
-        competitive=competitiveCheck.isChecked();
+        competitive=competitiveCheck.isChecked();//v
     }
 }
