@@ -1,7 +1,5 @@
 package com.abourahal.michael.uottawa.teamup;
 
-import android.*;
-import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -14,8 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -35,18 +33,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Calendar;
 
 /**
  * Created by hocke on 2017-07-17.
  */
 
-public class CreateEventFragment extends Fragment implements OnMapReadyCallback {
+public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
     View myView;
     private GoogleMap mMap;
     MapView mMapView;
     double latitude;
     double longitude;
+    private Button etDate;
+    private int year,month,day;
 
     @Nullable
     @Override
@@ -58,7 +57,7 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback 
             longitude = bundle.getDouble("longitude", 0);
         }
         Spinner spSport = (Spinner) getActivity().findViewById(R.id.spSport);
-
+        final Button etDate = (Button) getActivity().findViewById(R.id.etDate);
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         //fab.set
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +66,7 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback 
 
                 EditText etTitle = (EditText) getActivity().findViewById(R.id.etTitle);
                 EditText etMaxNumber = (EditText) getActivity().findViewById(R.id.etMaxNumber);
-                EditText etDate = (EditText) getActivity().findViewById(R.id.etDate);
+
                 EditText etStartTime = (EditText) getActivity().findViewById(R.id.etStartTime);
                 EditText etEndTime = (EditText) getActivity().findViewById(R.id.etEndTime);
                 EditText etDescription = (EditText) getActivity().findViewById(R.id.etDescription);
@@ -86,6 +85,9 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback 
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.content_frame,new FirstFragment()).commit();
                 Toast.makeText(getActivity(), "Event added at coordinates "+latitude+" latitude, "+longitude+" longitude", Toast.LENGTH_LONG).show();
+
+
+
             }
         });
 
@@ -100,7 +102,10 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback 
             mMapView.onResume();
             mMapView.getMapAsync(this);
         }
+
+
     }
+
     private void writeToFile(String data,Context context) {
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
@@ -178,5 +183,7 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback 
 
 
     }
+
+
 
 }
