@@ -6,10 +6,19 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"
-        android:text="Third Layout template"
-        android:textColor="@android:color/black"
-        android:textSize="24sp" />
+        android:text="About The Product:"
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView2"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="27dp"
+        android:text="TextView"
+        android:textSize="18sp" />
 </RelativeLayout>

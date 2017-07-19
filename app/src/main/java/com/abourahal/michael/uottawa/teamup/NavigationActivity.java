@@ -34,6 +34,7 @@ public class NavigationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("TeamUP");
         setSupportActionBar(toolbar);
 
 
@@ -157,9 +158,11 @@ public class NavigationActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_frame,new FirstFragment()).commit();
 
         } else if (id == R.id.nav_second_layout) {
+            getSupportActionBar().setTitle("Events");
             fragmentManager.beginTransaction().replace(R.id.content_frame,new SecondFragment()).commit();
 
         } else if (id == R.id.nav_about) {
+            getSupportActionBar().setTitle("About the Product");
             fragmentManager.beginTransaction().replace(R.id.content_frame, new ThirdFragment()).commit();
         }
 
