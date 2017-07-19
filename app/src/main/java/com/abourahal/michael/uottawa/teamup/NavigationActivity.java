@@ -1,9 +1,11 @@
 package com.abourahal.michael.uottawa.teamup;
 
 import android.accounts.AccountManager;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,8 +13,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -122,6 +126,22 @@ public class NavigationActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if(id==R.id.action_help){
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setTitle("Help");
+                dialog.setMessage(Html.fromHtml("<b>How to add an event? </b>"+"<br/>" + "1) Tap on a location on the map <br/>" + "2) Click the Add button on the bottom right of the screen <br/>" + "3) Enter all the required information in the next screen <br/>" + "4) Click the Add button again <br/>"
+                                    +"<br/><b>How to join an Event?</b> <br/>"+"1) Click on an Event on the Map <br/> 2) In the dialog that pops up above the event click the join button <br/><br/>"
+                                    +"<b>How to Leave an Event?</b> <br/>"+"1) Click on an Event on the Map <br/> 2) In the dialog that pops up above the event click the leave button"));
+                dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setCancelable(false);
+                dialog.create().show();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
