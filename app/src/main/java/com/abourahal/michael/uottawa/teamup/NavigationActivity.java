@@ -111,7 +111,7 @@ public class NavigationActivity extends AppCompatActivity
         } else if (id == R.id.nav_second_layout) {
             fragmentManager.beginTransaction().replace(R.id.content_frame,new SecondFragment()).commit();
 
-        } else if (id == R.id.nav_help) {
+        } else if (id == R.id.nav_about) {
             fragmentManager.beginTransaction().replace(R.id.content_frame, new ThirdFragment()).commit();
         }
 

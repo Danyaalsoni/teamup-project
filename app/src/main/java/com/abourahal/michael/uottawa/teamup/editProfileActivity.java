@@ -12,6 +12,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -67,6 +69,24 @@ public class editProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.navigation,menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId() == R.id.action_settings){
+//            Intent intent=new Intent(this,settingsActivity.class);
+//            startActivity(intent);
+            return true;
+        }
+        else if(item.getItemId()==R.id.action_help){
+            return true;
+        }
+        else{
+            return super.onOptionsItemSelected(item);
+        }
     }
     public void launchDatepicker(View view){
         final Calendar c=Calendar.getInstance();
