@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +35,7 @@ public class editProfileActivity extends AppCompatActivity {
     private RadioButton maleRadio,femaleRadio;
     private boolean maleR,femaleR,competitive;
     private CheckBox competitiveCheck;
-    private String name,phoneNumber,email,description,dateText;
+    private String name,phoneNumber,email,description,dateText,sport;
     private int year,month,day;
     public static final String PROFILEPREFERENCES="profilePreference";
     public static final String SPORTSKEY="sportKey",NAMEKEY="nameKey",PHONEKEY="phoneKey",EMAILKEY="emailKey",DESCRIPTIONKEY="descriptionKey",DATEKEY="dateKey",MALEKEY="maleKey",FEMALEKEY="femaleKey",COMPETITIVEKEY="competitiveKey";
@@ -63,6 +64,44 @@ public class editProfileActivity extends AppCompatActivity {
         femaleRadio=(RadioButton)findViewById(R.id.femaleRadio);
         competitiveCheck=(CheckBox)findViewById(R.id.checkBox);
         sportEdit=(EditText)findViewById(R.id.sportsEditText);
+
+        sharedPreferences = getSharedPreferences(PROFILEPREFERENCES,Context.MODE_PRIVATE);
+        name=(sharedPreferences.getString(NAMEKEY,""));
+        if(name!=""){
+            nameEdit.setText(name);
+        }
+        dateText=(sharedPreferences.getString(DATEKEY,""));
+        if(dateText!=""){
+            date.setText(dateText);
+        }
+        phoneNumber=(sharedPreferences.getString(PHONEKEY,""));
+        if(phoneNumber!=""){
+            phoneNumberEdit.setText(phoneNumber);
+        }
+        email=(sharedPreferences.getString(EMAILKEY,""));
+        if(email!=""){
+            emailEdit.setText(email);
+        }
+        description=(sharedPreferences.getString(DESCRIPTIONKEY,""));
+        if(description!=""){
+            descriptionEdit.setText(description);
+        }
+        sport=(sharedPreferences.getString(SPORTSKEY,""));
+        if(sport!=""){
+            sportEdit.setText(sport);
+        }
+        if(sharedPreferences.getBoolean(MALEKEY,false)==true){
+           maleRadio.setChecked(true);
+        }else{
+            maleRadio.setChecked(false);
+            femaleRadio.setChecked(true);
+        }
+        if(sharedPreferences.getBoolean(COMPETITIVEKEY,false)==true){
+            competitiveCheck.setChecked(true);
+        }else{
+            competitiveCheck.setChecked(false);
+        }
+
         fab=(FloatingActionButton)findViewById(R.id.saveButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +123,18 @@ public class editProfileActivity extends AppCompatActivity {
             return true;
         }
         else if(item.getItemId()==R.id.action_help){
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("Help");
+            dialog.setMessage(Html.fromHtml("Here you can edit your profile information <br/> Please enter all relevent information"));
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.setCancelable(false);
+            dialog.create().show();
             return true;
         }
         else{

@@ -1,6 +1,7 @@
 package com.abourahal.michael.uottawa.teamup;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -9,8 +10,10 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.BoolRes;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class profileActivity extends AppCompatActivity {
     public static final String PROFILEPREFERENCES="profilePreference";
-    public static final String SPORTSKEY="sportKey", NAMEKEY="nameKey",PHONEKEY="phoneKey",EMAILKEY="emailKey",DESCRIPTIONKEY="descriptionKey",DATEKEY="dateKey",MALEKEY="maleKey",FEMALEKEY="femaleKey",COMPETITIVEKEY="competitiveKey";
+    public static final String SPORTSKEY="sportKey", NAMEKEY="nameKey",PHONEKEY="phoneKey",EMAILKEY="emailKey",DESCRIPTIONKEY="descriptionKey",DATEKEY="dateKey",MALEKEY="maleKey",COMPETITIVEKEY="competitiveKey";
     SharedPreferences sharedPreferences;
     private TextView date;
     private TextView name,phoneNumber,email,description,gender,competitive,sport;
@@ -89,6 +92,18 @@ public class profileActivity extends AppCompatActivity {
             return true;
         }
         else if(item.getItemId()==R.id.action_help){
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle("Help");
+            dialog.setMessage(Html.fromHtml("Here you can view your profile information <br/><br/> <b>How to edit your Profile? </b> <br/>1) Click on the edit button on the bottom right and enter all relevent information in the next screen"));
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.setCancelable(false);
+            dialog.create().show();
             return true;
         }
         else{
