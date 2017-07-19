@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class editProfileActivity extends AppCompatActivity {
     private CheckBox competitiveCheck;
     private String name,phoneNumber,email,description,dateText;
     private int year,month,day;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,13 @@ public class editProfileActivity extends AppCompatActivity {
         maleRadio=(RadioButton)findViewById(R.id.maleRadio);
         femaleRadio=(RadioButton)findViewById(R.id.femaleRadio);
         competitiveCheck=(CheckBox)findViewById(R.id.checkBox);
+        fab=(FloatingActionButton)findViewById(R.id.saveButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              validate1();
+            }
+        });
 
     }
     public void launchDatepicker(View view){
@@ -113,6 +122,7 @@ public class editProfileActivity extends AppCompatActivity {
         dialog.create().show();
     }
     public void validate(){
+
         if(nameEdit.getText().toString().equals("")){
             AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
             dialog.setMessage("Please enter your Name");
@@ -177,5 +187,83 @@ public class editProfileActivity extends AppCompatActivity {
         maleR=maleRadio.isChecked();
         femaleR=femaleRadio.isChecked();
         competitive=competitiveCheck.isChecked();//v
+
+    }
+    public void validate1(){
+        boolean flag=true;
+        if(nameEdit.getText().toString().equals("")){
+            flag=false;
+            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
+            dialog.setMessage("Please enter your Name");
+            dialog.setTitle("Missing information");
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    nameEdit.requestFocus();
+                }
+            });
+            dialog.setCancelable(false);
+            dialog.create().show();
+        }else {
+            name = nameEdit.getText().toString();
+        }
+        if(phoneNumberEdit.getText().toString().equals("")){
+            flag=false;
+            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
+            dialog.setMessage("Please enter your Phone Number");
+            dialog.setTitle("Missing information");
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    phoneNumberEdit.requestFocus();
+                }
+            });
+            dialog.setCancelable(false);
+            dialog.create().show();
+        }else {
+            phoneNumber = phoneNumberEdit.getText().toString();
+        }
+        if(emailEdit.getText().toString().equals("")){
+            flag=false;
+            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
+            dialog.setMessage("Please enter your email");
+            dialog.setTitle("Missing information");
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    emailEdit.requestFocus();
+                }
+            });
+            dialog.setCancelable(false);
+            dialog.create().show();
+        }else {
+            email = emailEdit.getText().toString();
+        }
+        description=descriptionEdit.getText().toString();
+        if(date.getText().toString().equals("")) {
+            flag=false;
+            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
+            dialog.setMessage("Please enter your Date of Birth");
+            dialog.setTitle("Missing information");
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    date.requestFocus();
+                }
+            });
+            dialog.setCancelable(false);
+            dialog.create().show();
+        }else {
+            dateText = date.getText().toString();
+        }
+        maleR=maleRadio.isChecked();
+        femaleR=femaleRadio.isChecked();
+        competitive=competitiveCheck.isChecked();//v
+
+        if(flag) {
+            Intent intent = new Intent(getApplicationContext(), profileActivity.class);
+            startActivity(intent);
+        }
+
     }
 }
