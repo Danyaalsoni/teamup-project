@@ -72,12 +72,15 @@ public class NavigationActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        try {
-            Intent intent = AccountPicker.newChooseAccountIntent(null, null,
-                    new String[] { GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE }, false, null, null, null, null);
-            startActivityForResult(intent, 1);
-        } catch (ActivityNotFoundException e) {
-            // TODO
+        sharedPreferences=getSharedPreferences("profilePreference",Context.MODE_PRIVATE);
+        if(sharedPreferences.getString("accountKey","n")=="n") {
+            try {
+                Intent intent = AccountPicker.newChooseAccountIntent(null, null,
+                        new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null);
+                startActivityForResult(intent, 1);
+            } catch (ActivityNotFoundException e) {
+                // TODO
+            }
         }
 
     }
@@ -88,6 +91,7 @@ public class NavigationActivity extends AppCompatActivity
             sharedPreferences = getSharedPreferences("profilePreference", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor =sharedPreferences.edit();
             editor.putString("emailKey",accountEmail);
+            editor.putString("accountKey","y");
             editor.commit();
         }
     }
