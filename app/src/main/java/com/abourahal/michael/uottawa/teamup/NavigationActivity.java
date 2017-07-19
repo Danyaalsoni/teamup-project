@@ -79,7 +79,7 @@ public class NavigationActivity extends AppCompatActivity
                         new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null);
                 startActivityForResult(intent, 1);
             } catch (ActivityNotFoundException e) {
-                // TODO
+
             }
         }
 
