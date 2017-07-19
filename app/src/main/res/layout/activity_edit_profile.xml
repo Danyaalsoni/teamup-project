@@ -222,6 +222,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="7dp"
                         android:layout_weight="10"
+                        android:checked="false"
                         android:text="Competitive"
                         android:textSize="18sp" />
 

@@ -113,11 +113,67 @@ public class editProfileActivity extends AppCompatActivity {
         dialog.create().show();
     }
     public void validate(){
-        name=nameEdit.getText().toString();
-        phoneNumber=phoneNumberEdit.getText().toString();
-        email=emailEdit.getText().toString();
+        if(nameEdit.getText().toString().equals("")){
+            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
+            dialog.setMessage("Please enter your Name");
+            dialog.setTitle("Missing information");
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    nameEdit.requestFocus();
+                }
+            });
+            dialog.setCancelable(false);
+            dialog.create().show();
+        }else {
+            name = nameEdit.getText().toString();
+        }
+        if(phoneNumberEdit.getText().toString().equals("")){
+            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
+            dialog.setMessage("Please enter your Phone Number");
+            dialog.setTitle("Missing information");
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    phoneNumberEdit.requestFocus();
+                }
+            });
+            dialog.setCancelable(false);
+            dialog.create().show();
+        }else {
+            phoneNumber = phoneNumberEdit.getText().toString();
+        }
+        if(emailEdit.getText().toString().equals("")){
+            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
+            dialog.setMessage("Please enter your email");
+            dialog.setTitle("Missing information");
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    emailEdit.requestFocus();
+                }
+            });
+            dialog.setCancelable(false);
+            dialog.create().show();
+        }else {
+            email = emailEdit.getText().toString();
+        }
         description=descriptionEdit.getText().toString();
-        dateText=date.getText().toString();
+        if(date.getText().toString().equals("")) {
+            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
+            dialog.setMessage("Please enter your Date of Birth");
+            dialog.setTitle("Missing information");
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    date.requestFocus();
+                }
+            });
+            dialog.setCancelable(false);
+            dialog.create().show();
+        }else {
+            dateText = date.getText().toString();
+        }
         maleR=maleRadio.isChecked();
         femaleR=femaleRadio.isChecked();
         competitive=competitiveCheck.isChecked();//v
