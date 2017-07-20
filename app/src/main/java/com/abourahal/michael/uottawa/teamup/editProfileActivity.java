@@ -7,11 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +21,6 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -64,7 +63,6 @@ public class editProfileActivity extends AppCompatActivity {
         femaleRadio=(RadioButton)findViewById(R.id.femaleRadio);
         competitiveCheck=(CheckBox)findViewById(R.id.checkBox);
         sportEdit=(EditText)findViewById(R.id.sportsEditText);
-
         sharedPreferences = getSharedPreferences(PROFILEPREFERENCES,Context.MODE_PRIVATE);
         name=(sharedPreferences.getString(NAMEKEY,""));
         if(name!=""){

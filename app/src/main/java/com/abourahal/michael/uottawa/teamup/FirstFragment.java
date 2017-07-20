@@ -1,7 +1,6 @@
 package com.abourahal.michael.uottawa.teamup;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -11,8 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -35,7 +33,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -219,7 +216,7 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
                 }
                 else if(allFileItems[8].equalsIgnoreCase("Soccer"))
                 {
-                    m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.soccerballvariant));
+                    m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.soccer_ball_png_26389));
                 }
                 else if(allFileItems[8].equalsIgnoreCase("Football"))
                 {
