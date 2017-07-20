@@ -30,8 +30,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -184,7 +186,9 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
                 public void onMapClick(LatLng latLng) {
                     mMap.clear();
                     loadFile();
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("Event here?"));
+
+                    Marker m = mMap.addMarker(new MarkerOptions().position(latLng).title("Event here?"));
+                    m.showInfoWindow();
                     selectedLatitude = latLng.latitude;
                     selectedLongitude = latLng.longitude;
                 }
@@ -208,7 +212,28 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
             if(!allFileItems[0].equals("")) {
                 double lat = Double.parseDouble(allFileItems[0]);
                 double lon = Double.parseDouble(allFileItems[1]);
-                mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(allFileItems[3]));
+                Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(allFileItems[2]));
+                if(allFileItems[8].equalsIgnoreCase("Hockey"))
+                {
+                    m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.hockey));
+                }
+                else if(allFileItems[8].equalsIgnoreCase("Soccer"))
+                {
+                    m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.soccerballvariant));
+                }
+                else if(allFileItems[8].equalsIgnoreCase("Football"))
+                {
+                    m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.americanfootball));
+                }
+                else if(allFileItems[8].equalsIgnoreCase("Baseball"))
+                {
+                    m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.baseball));
+                }
+                else
+                {
+                    m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.basketball));
+                }
+
             }
         }
     }

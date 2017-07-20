@@ -272,8 +272,8 @@ public class SecondFragment extends Fragment {
                     String eTime = allFileItems[5];
                     btn1.setText("Delete");
                     btn2.setText("Edit");
-                    tv1.setText("Event Title "+title);
-                    tv2.setText("Date: "+date+" Start Time: "+sTime+" End Time: "+eTime);
+                    tv1.setText("Event Title: "+title+ " Sport: "+allFileItems[8]);
+                    tv2.setText("Date: "+date+" Start Time: "+sTime+" End Time: "+eTime+" \n"+allFileItems[7]);
                     Double[] latlng = new Double[2];
                     latlng[0] =lat;
                     latlng[1] =lon;
@@ -359,7 +359,7 @@ public class SecondFragment extends Fragment {
                 btn1.setText("Leave");
                 btn2.setVisibility(View.INVISIBLE);
                 //btn2.setText("Edit");
-                tv1.setText("Event Title "+title);
+                tv1.setText("Event Title: "+title+ " Sport: "+allFileItems[8]);
                 tv2.setText("Date: "+date+" Start Time: "+sTime+" End Time: "+eTime);
                 Double[] latlng = new Double[2];
                 latlng[0] =lat;
