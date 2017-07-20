@@ -25,7 +25,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="10dp"
+                android:paddingRight="2dp"
                 android:text="Title:" />
 
             <EditText

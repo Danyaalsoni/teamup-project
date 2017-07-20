@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,12 +59,17 @@ public class SecondFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.second_layout,container,false);
+
+
         hostList = new ArrayList<String>();
         nonHostList = new ArrayList<String>();
         mMap = new ArrayList<GoogleMap>();
         coor1 = new ArrayList<Double[]>();
         coor2 = new ArrayList<Double[]>();
         countMap =0;
+
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
         //coor.add(new String[2]);
         TabHost host = (TabHost) myView.findViewById(R.id.tabHost);
         host.setup();
@@ -249,7 +255,13 @@ public class SecondFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             FragmentManager fragmentManager = getFragmentManager();
-                            fragmentManager.beginTransaction().replace(R.id.content_frame,new EditEventFragment()).commit();
+                            EditEventFragment evf = new EditEventFragment();
+                            Bundle b = new Bundle();
+
+                            b.putString("line",hostList.get(position));
+
+                            evf.setArguments(b);
+                            fragmentManager.beginTransaction().replace(R.id.content_frame,evf).commit();
                         }
                     });
                     double lat = Double.parseDouble(allFileItems[0]);

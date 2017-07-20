@@ -60,6 +60,7 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.activity_create_event,container,false);
+        //writeToFile("", getActivity());
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             latitude = bundle.getDouble("latitude", 0);

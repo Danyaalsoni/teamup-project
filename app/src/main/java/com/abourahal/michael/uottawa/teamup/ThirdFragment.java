@@ -3,6 +3,7 @@ package com.abourahal.michael.uottawa.teamup;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,8 @@ public class ThirdFragment extends Fragment {
                 .addItem(new Element().setTitle("Version 1"))
                 .addGitHub("TeamupP/TeamUp2")
                 .create();
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
         return aboutPage;
     }
 }

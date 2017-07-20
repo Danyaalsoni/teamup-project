@@ -82,6 +82,7 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
 
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
         //fab.set
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
