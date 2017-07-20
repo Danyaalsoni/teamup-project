@@ -52,6 +52,17 @@ public class NavigationActivity extends AppCompatActivity
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame,new FirstFragment()).commit();
 
+
+        sharedPreferences=getSharedPreferences("profilePreference",Context.MODE_PRIVATE);
+        if(sharedPreferences.getString("accountKey","n")=="n") {
+            try {
+                Intent intent = AccountPicker.newChooseAccountIntent(null, null,
+                        new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null);
+                startActivityForResult(intent, 1);
+            } catch (ActivityNotFoundException e) {
+
+            }
+        }
         View header=navigationView.getHeaderView(0);
         ImageView contactImage=(ImageView)header.findViewById(R.id.contactImage);
         contactImage.setOnClickListener(new View.OnClickListener() {
@@ -77,17 +88,8 @@ public class NavigationActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        sharedPreferences=getSharedPreferences("profilePreference",Context.MODE_PRIVATE);
-        if(sharedPreferences.getString("accountKey","n")=="n") {
-            try {
-                Intent intent = AccountPicker.newChooseAccountIntent(null, null,
-                        new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null);
-                startActivityForResult(intent, 1);
-            } catch (ActivityNotFoundException e) {
-
-            }
-        }
-
+        contactName.setText(sharedPreferences.getString("nameKey","TeamUp"));
+        contactEmail.setText(sharedPreferences.getString("emailKey","TeamUP2TeamUp.com"));
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
