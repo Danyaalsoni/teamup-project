@@ -106,7 +106,10 @@ public class editProfileActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              validate1();
+            boolean r=  validate1();
+                if(r==true){
+                    finish();
+                }
             }
         });
 
@@ -186,8 +189,10 @@ public class editProfileActivity extends AppCompatActivity {
         dialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                validate();
-                finish();
+                boolean r=validate1();
+                if(r) {
+                    finish();
+                }
             }
         });
         dialog.setNegativeButton("Discard", new DialogInterface.OnClickListener(){
@@ -200,92 +205,11 @@ public class editProfileActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.create().show();
     }
-    public void validate(){
-        sharedPreferences=getSharedPreferences(PROFILEPREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor =sharedPreferences.edit();
-        if(nameEdit.getText().toString().equals("")){
-            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
-            dialog.setMessage("Please enter your Name");
-            dialog.setTitle("Missing information");
-            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    nameEdit.requestFocus();
-                }
-            });
-            dialog.setCancelable(false);
-            dialog.create().show();
-        }else {
-            name = nameEdit.getText().toString();
-            editor.putString(NAMEKEY,name);
-        }
-        if(phoneNumberEdit.getText().toString().equals("")){
-            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
-            dialog.setMessage("Please enter your Phone Number");
-            dialog.setTitle("Missing information");
-            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    phoneNumberEdit.requestFocus();
-                }
-            });
-            dialog.setCancelable(false);
-            dialog.create().show();
-        }else {
-            phoneNumber = phoneNumberEdit.getText().toString();
-            editor.putString(PHONEKEY,phoneNumber);
-        }
-        if(emailEdit.getText().toString().equals("")){
-            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
-            dialog.setMessage("Please enter your email");
-            dialog.setTitle("Missing information");
-            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    emailEdit.requestFocus();
-                }
-            });
-            dialog.setCancelable(false);
-            dialog.create().show();
-        }else {
-            email = emailEdit.getText().toString();
-            editor.putString(EMAILKEY,email);
-        }
-        description=descriptionEdit.getText().toString();
-        editor.putString(DESCRIPTIONKEY,description);
-        if(date.getText().toString().equals("")) {
-            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
-            dialog.setMessage("Please enter your Date of Birth");
-            dialog.setTitle("Missing information");
-            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    date.requestFocus();
-                }
-            });
-            dialog.setCancelable(false);
-            dialog.create().show();
-        }else {
-            dateText = date.getText().toString();
-            editor.putString(DATEKEY,dateText);
-        }
-        editor.putString(SPORTSKEY,sportEdit.getText().toString());
-        maleR=maleRadio.isChecked();
-        editor.putBoolean(MALEKEY,maleR);
-        femaleR=femaleRadio.isChecked();
-        editor.putBoolean(FEMALEKEY,femaleR);
-        competitive=competitiveCheck.isChecked();//v
-        editor.putBoolean(COMPETITIVEKEY,competitive);
-        editor.commit();
-        Toast.makeText(getApplicationContext(),"Successful save",Toast.LENGTH_LONG);
 
-    }
-    public void validate1(){
+    public boolean validate1(){
         sharedPreferences=getSharedPreferences(PROFILEPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor =sharedPreferences.edit();
-        boolean flag=true;
         if(nameEdit.getText().toString().equals("")){
-            flag=false;
             AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
             dialog.setMessage("Please enter your Name");
             dialog.setTitle("Missing information");
@@ -297,12 +221,8 @@ public class editProfileActivity extends AppCompatActivity {
             });
             dialog.setCancelable(false);
             dialog.create().show();
-        }else {
-            name = nameEdit.getText().toString();
-            editor.putString(NAMEKEY,name);
         }
-        if(phoneNumberEdit.getText().toString().equals("")){
-            flag=false;
+        else if(phoneNumberEdit.getText().toString().equals("")){
             AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
             dialog.setMessage("Please enter your Phone Number");
             dialog.setTitle("Missing information");
@@ -314,12 +234,8 @@ public class editProfileActivity extends AppCompatActivity {
             });
             dialog.setCancelable(false);
             dialog.create().show();
-        }else {
-            phoneNumber = phoneNumberEdit.getText().toString();
-            editor.putString(PHONEKEY,phoneNumber);
         }
-        if(emailEdit.getText().toString().equals("")){
-            flag=false;
+       else if(emailEdit.getText().toString().equals("")){
             AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
             dialog.setMessage("Please enter your email");
             dialog.setTitle("Missing information");
@@ -331,14 +247,8 @@ public class editProfileActivity extends AppCompatActivity {
             });
             dialog.setCancelable(false);
             dialog.create().show();
-        }else {
-            email = emailEdit.getText().toString();
-            editor.putString(EMAILKEY,email);
         }
-        description=descriptionEdit.getText().toString();
-        editor.putString(DESCRIPTIONKEY,description);
-        if(date.getText().toString().equals("")) {
-            flag=false;
+        else if(date.getText().toString().equals("")) {
             AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
             dialog.setMessage("Please enter your Date of Birth");
             dialog.setTitle("Missing information");
@@ -350,14 +260,9 @@ public class editProfileActivity extends AppCompatActivity {
             });
             dialog.setCancelable(false);
             dialog.create().show();
-        }else {
-            dateText = date.getText().toString();
-            editor.putString(DATEKEY,dateText);
         }
-        if(nameEdit.getText().toString().equals("")&&phoneNumberEdit.getText().toString().equals("")&&date.getText().toString().equals("")
+        else if(nameEdit.getText().toString().equals("")&&phoneNumberEdit.getText().toString().equals("")&&date.getText().toString().equals("")
                 &&emailEdit.getText().toString().equals("")){
-
-            flag=false;
             AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
             dialog.setMessage("Please enter all the missing information");
             dialog.setTitle("Missing information");
@@ -369,22 +274,28 @@ public class editProfileActivity extends AppCompatActivity {
             });
             dialog.setCancelable(false);
             dialog.create().show();
-        }else{
-            flag=true;
         }
-        editor.putString(SPORTSKEY,sportEdit.getText().toString());
-        maleR=maleRadio.isChecked();
-        editor.putBoolean(MALEKEY,maleR);
-        femaleR=femaleRadio.isChecked();
-        editor.putBoolean(FEMALEKEY,femaleR);
-        competitive=competitiveCheck.isChecked();//v
-        editor.putBoolean(COMPETITIVEKEY,competitive);
-        editor.commit();
-        if(flag) {
-//            Intent intent = new Intent(getApplicationContext(), profileActivity.class);
-//            startActivity(intent);
-            finish();
+        else {
+            name = nameEdit.getText().toString();
+            editor.putString(NAMEKEY,name);
+            phoneNumber = phoneNumberEdit.getText().toString();
+            editor.putString(PHONEKEY,phoneNumber);
+            email = emailEdit.getText().toString();
+            editor.putString(EMAILKEY,email);
+            description=descriptionEdit.getText().toString();
+            editor.putString(DESCRIPTIONKEY,description);
+            dateText = date.getText().toString();
+            editor.putString(DATEKEY,dateText);
+            editor.putString(SPORTSKEY, sportEdit.getText().toString());
+            maleR = maleRadio.isChecked();
+            editor.putBoolean(MALEKEY, maleR);
+            femaleR = femaleRadio.isChecked();
+            editor.putBoolean(FEMALEKEY, femaleR);
+            competitive = competitiveCheck.isChecked();//v
+            editor.putBoolean(COMPETITIVEKEY, competitive);
+            editor.commit();
+            return true;
         }
-        Toast.makeText(getApplicationContext(),"Successful save",Toast.LENGTH_LONG).show();
+    return false;
     }
 }

@@ -74,7 +74,22 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
                 EditText etDescription = (EditText) getActivity().findViewById(R.id.etDescription);
                 Spinner spSport = (Spinner) getActivity().findViewById(R.id.spSport);
                 CheckBox chkRepeat = (CheckBox) getActivity().findViewById(R.id.chkRepeat);
-                if(etTitle.getText().toString().equals("")){
+                if(etTitle.getText().toString().equals("")&&etMaxNumber.getText().toString().equals("")&&etDate.getText().toString().equals("")
+                        &&etStartTime.getText().toString().equals("")&&etEndTime.getText().toString().equals("")){
+                    flag=false;
+                    AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
+                    dialog.setMessage("Please enter all the missing information");
+                    dialog.setTitle("Missing information");
+                    dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            etTitle.requestFocus();
+                        }
+                    });
+                    dialog.setCancelable(false);
+                    dialog.create().show();
+                }
+                else if(etTitle.getText().toString().equals("")){
                     flag=false;
                     AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
                     dialog.setMessage("Please enter the Event Title");
@@ -87,10 +102,8 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
                     });
                     dialog.setCancelable(false);
                     dialog.create().show();
-                }else{
-                    flag=true;
                 }
-                if(etMaxNumber.getText().toString().equals("")){
+                else if(etMaxNumber.getText().toString().equals("")){
                     flag=false;
                     AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
                     dialog.setMessage("Please enter the Number of Members");
@@ -103,12 +116,10 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
                     });
                     dialog.setCancelable(false);
                     dialog.create().show();
-                }else{
-                    flag=true;
                 }
-                if(etDate.getText().toString().equals("")){
-                    flag=false;
-                    AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
+               else if(etDate.getText().toString().equals("")) {
+                    flag = false;
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(myView.getContext());
                     dialog.setMessage("Please enter the Date");
                     dialog.setTitle("Missing information");
                     dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -119,10 +130,8 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
                     });
                     dialog.setCancelable(false);
                     dialog.create().show();
-                }else{
-                    flag=true;
                 }
-                if(etStartTime.getText().toString().equals("")){
+                else if(etStartTime.getText().toString().equals("")){
                     flag=false;
                     AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
                     dialog.setMessage("Please enter the Start Time");
@@ -135,10 +144,8 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
                     });
                     dialog.setCancelable(false);
                     dialog.create().show();
-                }else{
-                    flag=true;
                 }
-                if(etEndTime.getText().toString().equals("")){
+                else if(etEndTime.getText().toString().equals("")){
                     flag=false;
                     AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
                     dialog.setMessage("Please enter the End Time");
@@ -151,24 +158,6 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
                     });
                     dialog.setCancelable(false);
                     dialog.create().show();
-                }else{
-                    flag=true;
-                }
-                if(etTitle.getText().toString().equals("")&&etMaxNumber.getText().toString().equals("")&&etDate.getText().toString().equals("")
-                        &&etStartTime.getText().toString().equals("")&&etEndTime.getText().toString().equals("")){
-
-                        flag=false;
-                        AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
-                        dialog.setMessage("Please enter all the missing information");
-                        dialog.setTitle("Missing information");
-                        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                etTitle.requestFocus();
-                            }
-                        });
-                        dialog.setCancelable(false);
-                        dialog.create().show();
                 }else{
                     flag=true;
                 }
