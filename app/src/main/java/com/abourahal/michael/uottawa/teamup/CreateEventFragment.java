@@ -3,11 +3,13 @@ package com.abourahal.michael.uottawa.teamup;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,35 +59,134 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
             longitude = bundle.getDouble("longitude", 0);
         }
         Spinner spSport = (Spinner) getActivity().findViewById(R.id.spSport);
-        final Button etDate = (Button) getActivity().findViewById(R.id.etDate);
+
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         //fab.set
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                EditText etTitle = (EditText) getActivity().findViewById(R.id.etTitle);
-                EditText etMaxNumber = (EditText) getActivity().findViewById(R.id.etMaxNumber);
-
-                EditText etStartTime = (EditText) getActivity().findViewById(R.id.etStartTime);
-                EditText etEndTime = (EditText) getActivity().findViewById(R.id.etEndTime);
+                boolean flag=true;
+                final EditText etTitle = (EditText) getActivity().findViewById(R.id.etTitle);
+                final EditText etMaxNumber = (EditText) getActivity().findViewById(R.id.etMaxNumber);
+                final Button etDate = (Button) getActivity().findViewById(R.id.etDate);
+                final EditText etStartTime = (EditText) getActivity().findViewById(R.id.etStartTime);
+                final EditText etEndTime = (EditText) getActivity().findViewById(R.id.etEndTime);
                 EditText etDescription = (EditText) getActivity().findViewById(R.id.etDescription);
                 Spinner spSport = (Spinner) getActivity().findViewById(R.id.spSport);
                 CheckBox chkRepeat = (CheckBox) getActivity().findViewById(R.id.chkRepeat);
+                if(etTitle.getText().toString().equals("")){
+                    flag=false;
+                    AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
+                    dialog.setMessage("Please enter the Event Title");
+                    dialog.setTitle("Missing information");
+                    dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            etTitle.requestFocus();
+                        }
+                    });
+                    dialog.setCancelable(false);
+                    dialog.create().show();
+                }else{
+                    flag=true;
+                }
+                if(etMaxNumber.getText().toString().equals("")){
+                    flag=false;
+                    AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
+                    dialog.setMessage("Please enter the Number of Members");
+                    dialog.setTitle("Missing information");
+                    dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            etMaxNumber.requestFocus();
+                        }
+                    });
+                    dialog.setCancelable(false);
+                    dialog.create().show();
+                }else{
+                    flag=true;
+                }
+                if(etDate.getText().toString().equals("")){
+                    flag=false;
+                    AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
+                    dialog.setMessage("Please enter the Date");
+                    dialog.setTitle("Missing information");
+                    dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            etDate.requestFocus();
+                        }
+                    });
+                    dialog.setCancelable(false);
+                    dialog.create().show();
+                }else{
+                    flag=true;
+                }
+                if(etStartTime.getText().toString().equals("")){
+                    flag=false;
+                    AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
+                    dialog.setMessage("Please enter the Start Time");
+                    dialog.setTitle("Missing information");
+                    dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            etStartTime.requestFocus();
+                        }
+                    });
+                    dialog.setCancelable(false);
+                    dialog.create().show();
+                }else{
+                    flag=true;
+                }
+                if(etEndTime.getText().toString().equals("")){
+                    flag=false;
+                    AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
+                    dialog.setMessage("Please enter the End Time");
+                    dialog.setTitle("Missing information");
+                    dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            etEndTime.requestFocus();
+                        }
+                    });
+                    dialog.setCancelable(false);
+                    dialog.create().show();
+                }else{
+                    flag=true;
+                }
+                if(etTitle.getText().toString().equals("")&&etMaxNumber.getText().toString().equals("")&&etDate.getText().toString().equals("")
+                        &&etStartTime.getText().toString().equals("")&&etEndTime.getText().toString().equals("")){
+
+                        flag=false;
+                        AlertDialog.Builder dialog=new AlertDialog.Builder(myView.getContext());
+                        dialog.setMessage("Please enter all the missing information");
+                        dialog.setTitle("Missing information");
+                        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                etTitle.requestFocus();
+                            }
+                        });
+                        dialog.setCancelable(false);
+                        dialog.create().show();
+                }else{
+                    flag=true;
+                }
                 boolean check = chkRepeat.isChecked();
                 String checkString ="";
                 if(check)
                 checkString="yes";
                 else
                 checkString="no";
-                writeToFile("",getActivity());
-                String data =  latitude+"|"+longitude+"|"+etTitle.getText().toString()+"|"+etMaxNumber.getText().toString()+"|"+etDate.getText().toString()+"|"+etStartTime.getText().toString()+"|"+etEndTime.getText().toString()+"|"+etDescription.getText().toString()+"|"+spSport.getSelectedItem().toString()+"|"+checkString+"\n";
-                String previousData = readFromFile(getActivity());
-                writeToFile(previousData+data,getActivity());
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame,new FirstFragment()).commit();
-                Toast.makeText(getActivity(), "Event added at coordinates "+latitude+" latitude, "+longitude+" longitude", Toast.LENGTH_LONG).show();
-
+                if(flag==true) {
+                    writeToFile("", getActivity());
+                    String data = latitude + "|" + longitude + "|" + etTitle.getText().toString() + "|" + etMaxNumber.getText().toString() + "|" + etDate.getText().toString() + "|" + etStartTime.getText().toString() + "|" + etEndTime.getText().toString() + "|" + etDescription.getText().toString() + "|" + spSport.getSelectedItem().toString() + "|" + checkString + "\n";
+                    String previousData = readFromFile(getActivity());
+                    writeToFile(previousData + data, getActivity());
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, new FirstFragment()).commit();
+                    Toast.makeText(getActivity(), "Event added at coordinates " + latitude + " latitude, " + longitude + " longitude", Toast.LENGTH_LONG).show();
+                }
 
 
             }

@@ -354,6 +354,24 @@ public class editProfileActivity extends AppCompatActivity {
             dateText = date.getText().toString();
             editor.putString(DATEKEY,dateText);
         }
+        if(nameEdit.getText().toString().equals("")&&phoneNumberEdit.getText().toString().equals("")&&date.getText().toString().equals("")
+                &&emailEdit.getText().toString().equals("")){
+
+            flag=false;
+            AlertDialog.Builder dialog=new AlertDialog.Builder(editProfileActivity.this);
+            dialog.setMessage("Please enter all the missing information");
+            dialog.setTitle("Missing information");
+            dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    nameEdit.requestFocus();
+                }
+            });
+            dialog.setCancelable(false);
+            dialog.create().show();
+        }else{
+            flag=true;
+        }
         editor.putString(SPORTSKEY,sportEdit.getText().toString());
         maleR=maleRadio.isChecked();
         editor.putBoolean(MALEKEY,maleR);

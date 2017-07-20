@@ -26,9 +26,7 @@ public class ThirdFragment extends Fragment {
         View aboutPage = new AboutPage(myView.getContext())
                 .isRTL(false)
                 .setImage(R.mipmap.logo)
-               .setDescription("TeamUp allows users to organize and schedule sports meetups with their friends or with people nearby.")
-
-                //.setDescription()
+                .setDescription("TeamUp allows users to organize and schedule sports meetups with their friends or with people nearby.")
                 .addItem(new Element().setTitle("Version 1"))
                 .addGitHub("TeamupP/TeamUp2")
                 .create();
