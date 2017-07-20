@@ -149,7 +149,7 @@ public class EditEventFragment  extends Fragment implements OnMapReadyCallback {
                 mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        etStartTime.setText( selectedHour + ":" + selectedMinute);
+                        etStartTime.setText( String.format("%02d:%02d",selectedHour , selectedMinute));
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -169,7 +169,7 @@ public class EditEventFragment  extends Fragment implements OnMapReadyCallback {
                 mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        etEndTime.setText( selectedHour + ":" + selectedMinute);
+                        etEndTime.setText( String.format("%02d:%02d",selectedHour , selectedMinute));
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
