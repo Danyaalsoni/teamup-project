@@ -1,7 +1,9 @@
 package com.abourahal.michael.uottawa.teamup;
 
+import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -16,8 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Calendar;
 
 /**
  * Created by hocke on 2017-07-17.
@@ -47,6 +52,8 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
     double latitude;
     double longitude;
     private Button etDate;
+    private Button etStartTime;
+    private Button etEndTime;
     private int year,month,day;
 
     @Nullable
@@ -59,21 +66,89 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
             longitude = bundle.getDouble("longitude", 0);
         }
         Spinner spSport = (Spinner) getActivity().findViewById(R.id.spSport);
+        etDate = (Button) myView.findViewById(R.id.etDate);
+        etStartTime = (Button) myView.findViewById(R.id.etStartTime);
+        etEndTime = (Button) myView.findViewById(R.id.etEndTime);
+        etDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c=Calendar.getInstance();
+                year=c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
 
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                etDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+
+                            }
+                        }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
+        etStartTime.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        etStartTime.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+            }
+        });
+        etEndTime.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        etEndTime.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         //fab.set
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                EditText etDescription = (EditText) getActivity().findViewById(R.id.etDescription);
+                Spinner spSport = (Spinner) getActivity().findViewById(R.id.spSport);
+                CheckBox chkRepeat = (CheckBox) getActivity().findViewById(R.id.chkRepeat);
                 boolean flag=true;
                 final EditText etTitle = (EditText) getActivity().findViewById(R.id.etTitle);
                 final EditText etMaxNumber = (EditText) getActivity().findViewById(R.id.etMaxNumber);
                 final Button etDate = (Button) getActivity().findViewById(R.id.etDate);
-                final EditText etStartTime = (EditText) getActivity().findViewById(R.id.etStartTime);
-                final EditText etEndTime = (EditText) getActivity().findViewById(R.id.etEndTime);
-                EditText etDescription = (EditText) getActivity().findViewById(R.id.etDescription);
-                Spinner spSport = (Spinner) getActivity().findViewById(R.id.spSport);
-                CheckBox chkRepeat = (CheckBox) getActivity().findViewById(R.id.chkRepeat);
+
+
                 if(etTitle.getText().toString().equals("")&&etMaxNumber.getText().toString().equals("")&&etDate.getText().toString().equals("")
                         &&etStartTime.getText().toString().equals("")&&etEndTime.getText().toString().equals("")){
                     flag=false;
@@ -117,7 +192,7 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
                     dialog.setCancelable(false);
                     dialog.create().show();
                 }
-               else if(etDate.getText().toString().equals("")) {
+                else if(etDate.getText().toString().equals("")) {
                     flag = false;
                     AlertDialog.Builder dialog = new AlertDialog.Builder(myView.getContext());
                     dialog.setMessage("Please enter the Date");
@@ -168,8 +243,8 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
                 else
                 checkString="no";
                 if(flag==true) {
-                    writeToFile("", getActivity());
-                    String data = latitude + "|" + longitude + "|" + etTitle.getText().toString() + "|" + etMaxNumber.getText().toString() + "|" + etDate.getText().toString() + "|" + etStartTime.getText().toString() + "|" + etEndTime.getText().toString() + "|" + etDescription.getText().toString() + "|" + spSport.getSelectedItem().toString() + "|" + checkString + "\n";
+                    //writeToFile("", getActivity());
+                    String data =  latitude+"|^|"+longitude+"|^|"+etTitle.getText().toString()+"|^|"+etMaxNumber.getText().toString()+"|^|"+etDate.getText().toString()+"|^|"+etStartTime.getText().toString()+"|^|"+etEndTime.getText().toString()+"|^|"+etDescription.getText().toString()+"|^|"+spSport.getSelectedItem().toString()+"|^|"+checkString+"|^|"+"HOST"+"-^-";
                     String previousData = readFromFile(getActivity());
                     writeToFile(previousData + data, getActivity());
                     FragmentManager fragmentManager = getFragmentManager();

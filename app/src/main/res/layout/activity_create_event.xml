@@ -108,16 +108,20 @@
                 android:hint="Event Date "
                 android:paddingLeft="4dp"
                 android:textAlignment="textStart"
+
                 android:textSize="18sp" />
 
-            <EditText
+            <Button
                 android:id="@+id/etStartTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Start Time"
-                android:inputType="time" />
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="10"
+                android:background="@android:color/transparent"
+                android:hint="Start Time "
+                android:paddingLeft="4dp"
+                android:textAlignment="textStart"
+
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -128,17 +132,23 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:text="    " />
 
-            <EditText
+            <Button
                 android:id="@+id/etEndTime"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="170dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="160dp"
+                android:layout_weight="10"
+                android:background="@android:color/transparent"
                 android:hint="End Time "
-                android:inputType="time" />
+                android:paddingLeft="4dp"
+                android:textAlignment="textStart"
+
+                android:textSize="18sp" />
+            \
         </LinearLayout>
 
         <LinearLayout

@@ -198,11 +198,12 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
 
     private void loadFile()
     {
+        //writeToFile("",getActivity());
         String allActivity = readFromFile(getActivity());
-        String[] allMarker = allActivity.split("\n");
+        String[] allMarker = allActivity.split("\\-\\^\\-");
         for(int i=0;i<allMarker.length;++i)
         {
-            String[] allFileItems = (allMarker[i]).split("\\|");
+            String[] allFileItems = (allMarker[i]).split("\\|\\^\\|");
             if(!allFileItems[0].equals("")) {
                 double lat = Double.parseDouble(allFileItems[0]);
                 double lon = Double.parseDouble(allFileItems[1]);
