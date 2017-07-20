@@ -34,7 +34,7 @@ public class NavigationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("TeamUP");
+        toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
 
 
@@ -157,6 +157,7 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
         FragmentManager fragmentManager = getFragmentManager();
         if (id == R.id.nav_first_layout) {
+            getSupportActionBar().setTitle("Home");
             fragmentManager.beginTransaction().replace(R.id.content_frame,new FirstFragment()).commit();
 
         } else if (id == R.id.nav_second_layout) {
