@@ -29,8 +29,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.BufferedReader;
@@ -55,6 +57,7 @@ public class EditEventFragment  extends Fragment implements OnMapReadyCallback {
     private Button etStartTime;
     private Button etEndTime;
     private int year,month,day;
+    String[] allItems;
 
     @Nullable
     @Override
@@ -66,7 +69,7 @@ public class EditEventFragment  extends Fragment implements OnMapReadyCallback {
             line = bundle.getString("line", "");
 
         }
-        String[] allItems = line.split("\\|\\^\\|");
+        allItems = line.split("\\|\\^\\|");
 
 
         EditText etDescription = (EditText) myView.findViewById(R.id.etDescription);
@@ -79,8 +82,8 @@ public class EditEventFragment  extends Fragment implements OnMapReadyCallback {
 
         etStartTime = (Button) myView.findViewById(R.id.etStartTime);
         etEndTime = (Button) myView.findViewById(R.id.etEndTime);
-        longitude = Double.parseDouble(allItems[0]);
-        latitude = Double.parseDouble(allItems[1]);
+        latitude = Double.parseDouble(allItems[0]);
+        longitude = Double.parseDouble(allItems[1]);
 
         etTitle.setText(allItems[2]);
         etMaxNumber.setText(allItems[3]);
@@ -182,7 +185,7 @@ public class EditEventFragment  extends Fragment implements OnMapReadyCallback {
         //fab.set
         fab.setVisibility(View.VISIBLE);
         final String oldData = allItems[0]+"|^|"+allItems[1]+"|^|"+allItems[2]+"|^|"+allItems[3]+"|^|"+allItems[4]+"|^|"+allItems[5]+"|^|"+allItems[6]+"|^|"+allItems[7]+"|^|"+allItems[8]+"|^|"+allItems[9]+"|^|";
-
+        fab.setImageResource(R.mipmap.ic_save_white_24dp);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -308,7 +311,7 @@ public class EditEventFragment  extends Fragment implements OnMapReadyCallback {
                     writeToFile(filteredOldData + data, getActivity());
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.content_frame, new SecondFragment()).commit();
-                    Toast.makeText(getActivity(), "Event edited at coordinates " + latitude + " latitude, " + longitude + " longitude", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Event edited", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -370,6 +373,7 @@ public class EditEventFragment  extends Fragment implements OnMapReadyCallback {
 
 
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -379,15 +383,35 @@ public class EditEventFragment  extends Fragment implements OnMapReadyCallback {
 
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.getUiSettings().setScrollGesturesEnabled(false);
-        mMap.getUiSettings().setZoomControlsEnabled(false);
-        mMap.getUiSettings().setTiltGesturesEnabled(false);
+
+        mMap.getUiSettings().setAllGesturesEnabled(false);
 
         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-            mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("New Event"));
-            CameraPosition lib = CameraPosition.builder().target(new LatLng(latitude, longitude)).zoom(14).bearing(0).tilt(20).build();
+
+           Marker m= mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)));
+            if(allItems[8].equalsIgnoreCase("Hockey"))
+            {
+                m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.hockey));
+            }
+            else if(allItems[8].equalsIgnoreCase("Soccer"))
+            {
+                m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.soccerballvariant));
+            }
+            else if(allItems[8].equalsIgnoreCase("Football"))
+            {
+                m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.americanfootball));
+            }
+            else if(allItems[8].equalsIgnoreCase("Baseball"))
+            {
+                m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.baseball));
+            }
+            else
+            {
+                m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.basketball));
+            }
+            CameraPosition lib = CameraPosition.builder().target(new LatLng(latitude, longitude)).zoom(12).bearing(0).tilt(10).build();
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(lib));
 
         } else {

@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,9 +14,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -82,6 +88,7 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
+        fab.setImageResource(R.mipmap.ic_add_white_24dp);
         //fab.set
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,18 +96,26 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
                 //Snackbar.make(view, "Adding Event", Snackbar.LENGTH_LONG)
                 //        .setAction("Action", null).show();
                 //NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-                CreateEventFragment cr = new CreateEventFragment();
-                Bundle b = new Bundle();
-                b.putDouble("latitude",selectedLatitude);
-                b.putDouble("longitude",selectedLongitude);
-                cr.setArguments(b);
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame,cr).commit();
+
+                if(selectedLongitude!=0&&selectedLatitude!=0) {
+                    CreateEventFragment cr = new CreateEventFragment();
+                    Bundle b = new Bundle();
+                    b.putDouble("latitude", selectedLatitude);
+                    b.putDouble("longitude", selectedLongitude);
+                    cr.setArguments(b);
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.content_frame, cr).commit();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Please select a location on the map", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
+        //writeToFile("",getActivity());
+
         return myView;
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
 
     }
     private void writeToFile(String data,Context context) {
@@ -205,18 +220,20 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
         String[] allMarker = allActivity.split("\\-\\^\\-");
         for(int i=0;i<allMarker.length;++i)
         {
-            String[] allFileItems = (allMarker[i]).split("\\|\\^\\|");
+            final String[] allFileItems = (allMarker[i]).split("\\|\\^\\|");
             if(!allFileItems[0].equals("")) {
                 double lat = Double.parseDouble(allFileItems[0]);
                 double lon = Double.parseDouble(allFileItems[1]);
-                Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(allFileItems[2]));
+                final String info =  "Max Participant: "+allFileItems[3] + "\n"+"Date: "+allFileItems[4] + "\n"+"Start Time: "+allFileItems[5] + "\n"+"End Time: "+allFileItems[6] + "\n"+"Description:  "+allFileItems[7];
+                Marker m = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(allFileItems[2]).snippet(info));
+
                 if(allFileItems[8].equalsIgnoreCase("Hockey"))
                 {
                     m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.hockey));
                 }
                 else if(allFileItems[8].equalsIgnoreCase("Soccer"))
                 {
-                    m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.soccer_ball_png_26389));
+                    m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.soccerballvariant));
                 }
                 else if(allFileItems[8].equalsIgnoreCase("Football"))
                 {
@@ -231,9 +248,59 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback, Googl
                     m.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.basketball));
                 }
 
+                mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                    @Override
+                    public View getInfoWindow(Marker arg0) {
+
+                        return null;
+                    }
+
+                    @Override
+                    public View getInfoContents(Marker m) {
+
+                        Context mContext = getActivity();
+
+                        LinearLayout info = new LinearLayout(mContext);
+                        info.setOrientation(LinearLayout.VERTICAL);
+
+                        TextView title = new TextView(mContext);
+                        title.setTextColor(Color.BLACK);
+                        title.setGravity(Gravity.CENTER);
+                        title.setTypeface(null, Typeface.BOLD);
+                        title.setText(m.getTitle());
+                        title.setSingleLine(false);
+
+                        info.addView(title);
+
+                        if (m.getSnippet() != null) {
+                            TextView snippet = new TextView(mContext);
+                            snippet.setTextColor(Color.GRAY);
+                            snippet.setText(m.getSnippet());
+                            snippet.setSingleLine(false);
+
+                            info.addView(snippet);
+                            String file = readFromFile(getActivity());
+                            String[] lines = file.split("\\-\\^\\-");
+
+
+                            Button b = new Button(getActivity());
+
+                            b.setText("Join");
+                            b.setBackgroundColor(Color.TRANSPARENT);
+                            //b.setBackgroundColor(R.color.colorPrimary);
+
+                            info.addView(b);
+                        }
+
+
+                        return info;
+                    }
+                });
             }
         }
     }
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         requestLocationUpdate();

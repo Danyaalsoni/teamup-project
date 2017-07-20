@@ -251,6 +251,8 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.content_frame, new FirstFragment()).commit();
                     Toast.makeText(getActivity(), "Event added at coordinates " + latitude + " latitude, " + longitude + " longitude", Toast.LENGTH_LONG).show();
+                    writeToFile(readFromFile(getActivity())+"45.4206631|^|-75.6769559|^|Football Practice|^|22|^|22/07/2017|^|14:30|^|16:30|^|This is a highly competitive match that only accept trained athletes|^|Football|^|yes|^|JOINED-^-45.4202811|^|-75.6782749|^|Casual Hockey Game|^|100|^|21/07/2017|^|17:30|^|20:30|^|This is a one time only casual match bring your family limited entry|^|Hockey|^|no|^|JOINED-^-45.4234429|^|-75.6832892|^|Casual game of catch!|^|4|^|22/07/2017|^|14:30|^|16:00|^|I just wanted to play some catch and was looking for 3 other willing to join|^|Baseball|^|no|^|JOINED-^-",getActivity());
+
                 }
 
 
@@ -330,14 +332,13 @@ public class CreateEventFragment extends Fragment implements OnMapReadyCallback{
 
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mMap.getUiSettings().setScrollGesturesEnabled(false);
-        mMap.getUiSettings().setZoomControlsEnabled(false);
-        mMap.getUiSettings().setTiltGesturesEnabled(false);
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+
 
         if (ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-            mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("New Event"));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)));
             CameraPosition lib = CameraPosition.builder().target(new LatLng(latitude, longitude)).zoom(14).bearing(0).tilt(20).build();
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(lib));
 
